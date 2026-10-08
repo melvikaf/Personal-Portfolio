@@ -65,3 +65,5 @@ button,input,summary{font-family:var(--body-font)}
 .site-shell .timeline-meta{display:flex;flex-direction:column;gap:8px;margin:0;color:var(--muted);font:400 12px/1.6 var(--body-font);padding-top:4px;font-variant-numeric:tabular-nums}
 .timeline-location{font-size:12px}.timeline-content h3{margin:0 0 8px}.timeline-content .experience-role{margin:0 0 16px;color:var(--accent-ink);font-size:14px;line-height:1.6}.timeline-content ul{margin:0}.timeline-content>p:last-child{margin-bottom:0}
 @media(max-width:800px){.site-shell .timeline-row{grid-template-columns:1fr;gap:14px;padding:28px 0}.site-shell .timeline-meta{flex-direction:column;gap:4px;padding:0}.timeline-content h3{font-size:1.5rem}}
+
+.hero-availability{display:block;margin-top:8px;color:var(--accent-ink);font-weight:600}

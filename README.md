@@ -26,3 +26,5 @@ The landing page includes an animated scatter plot: “Connect the dots” arran
 ## Web analytics
 
 Vercel Analytics is mounted in `src/main.tsx` using `@vercel/analytics/react` for this Vite app. Enable Web Analytics in the Vercel project dashboard and deploy the updated site to collect production page views.
+
+The homepage features three selected projects. The full searchable archive is at `/projects/`; Vite builds both page entry points.
