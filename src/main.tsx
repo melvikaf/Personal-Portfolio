@@ -129,10 +129,28 @@ function ProjectCard({ project }: { project: Project }) {
   return <article className={`project-card ${project.color}`}><div className="project-number">{project.number}</div><div className="project-main">{project.image ? <img className="project-image" src={project.image} alt={`${project.title} project thumbnail`} /> : <div className="project-photo-placeholder"><span>PROJECT IMAGE</span><small>Add screenshot / photo</small></div>}{project.award && <p className="project-award">✦ {project.award}</p>}<h3>{project.title}</h3><p>{project.description}</p><div className="tag-row">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><div className="project-links">{project.links.map(link => <ExternalLink key={link.label} link={link} />)}</div></div><div className="project-metric"><strong>{project.metric}</strong><span>{project.metricLabel}</span></div><a className="project-arrow" href={project.links[0]?.href || '#contact'} aria-label={`View ${project.title}`}><ArrowUpRight size={23} /></a></article>
 }
 
+function YarnTrail({ progress }: { progress: number }) {
+  const pathRef = useRef<SVGPathElement>(null)
+  const [tip, setTip] = useState({ x: 97, y: 21 })
+  const strand = 'M97 21 ' + Array.from({ length: 6 }, (_, i) => {
+    const y = 21 + i * 330
+    return `C97 ${y + 65} 12 ${y + 55} 18 ${y + 135} C22 ${y + 190} 83 ${y + 180} 67 ${y + 145} C42 ${y + 110} 8 ${y + 195} 38 ${y + 240} C59 ${y + 277} 97 ${y + 280} 97 ${y + 330}`
+  }).join(' ')
+  useEffect(() => {
+    const path = pathRef.current
+    if (path) { const point = path.getPointAtLength(path.getTotalLength() * progress); setTip({ x: point.x, y: point.y }) }
+  }, [progress])
+  return <svg className="process-yarn" viewBox="0 0 125 2022" preserveAspectRatio="none" aria-hidden="true">
+    <path className="yarn-guide" d={strand} />
+    <path className="yarn-strand" ref={pathRef} d={strand} pathLength="1" style={{ strokeDashoffset: 1 - progress }} />
+    <g transform={`translate(${tip.x} ${tip.y})`}><g transform={`rotate(${progress * 1080}) scale(${1 - progress * .35})`} className="yarn-ball"><circle r="17" /><path d="M-13-10Q0 0 13 10M-16-3Q0 7 8 15M-8-15Q6-4 16 3M-13 10Q-3-8 9-14M-5 16Q3 0 15-7M-16 2Q-10-9 1-16" /></g></g>
+  </svg>
+}
+
 function ProcessSection() {
   const sectionRef = useRef<HTMLElement>(null); const [progress, setProgress] = useState(0); const [activeStep, setActiveStep] = useState(0)
   useEffect(() => { let frame: number | null = null; const updatePath = () => { if (frame !== null) cancelAnimationFrame(frame); frame = requestAnimationFrame(() => { if (!sectionRef.current) return; const rect = sectionRef.current.getBoundingClientRect(); const travel = Math.max(rect.height - window.innerHeight, 1); const nextProgress = Math.min(1, Math.max(0, -rect.top / travel)); setProgress(nextProgress); setActiveStep(Math.min(processSteps.length - 1, Math.floor(nextProgress * processSteps.length))); frame = null }) }; updatePath(); window.addEventListener('scroll', updatePath, { passive: true }); window.addEventListener('resize', updatePath); return () => { window.removeEventListener('scroll', updatePath); window.removeEventListener('resize', updatePath); if (frame !== null) cancelAnimationFrame(frame) } }, [])
-  return <section className="process-section" id="process" ref={sectionRef}><div className="process-sticky"><p className="eyebrow">How I work with data</p><h2>How I approach<br /><em>a data problem.</em></h2><p className="process-intro">Good analysis is a conversation between the question, the data, the model, and the people who use the result.</p><div className="process-progress"><span style={{ transform: `scaleY(${progress})` }} /><b>{String(activeStep + 1).padStart(2, '0')} / 06</b></div></div><div className="process-track" style={{ '--process-progress': progress } as CSSProperties}><div className="process-line" />{processSteps.map((step, index) => <article className={`process-step ${index <= activeStep ? 'is-active' : ''}`} key={step.number}><div className="process-node">{step.number}</div><div><p className="process-kicker">STAGE {step.number}</p><h3>{step.title}</h3><p>{step.text}</p></div></article>)}</div></section>
+  return <section className="process-section" id="process" ref={sectionRef}><div className="process-sticky"><p className="eyebrow">How I work with data</p><h2>How I approach<br /><em>a data problem.</em></h2><p className="process-intro">Good analysis is a conversation between the question, the data, the model, and the people who use the result.</p><div className="process-progress"><span style={{ transform: `scaleY(${progress})` }} /><b>{String(activeStep + 1).padStart(2, '0')} / 06</b></div></div><div className="process-track" style={{ '--process-progress': progress } as CSSProperties}><YarnTrail progress={progress} />{processSteps.map((step, index) => <article className={`process-step ${index <= activeStep ? 'is-active' : ''}`} key={step.number}><div className="process-node">{step.number}</div><div><p className="process-kicker">STAGE {step.number}</p><h3>{step.title}</h3><p>{step.text}</p></div></article>)}</div></section>
 }
 
 function App() {

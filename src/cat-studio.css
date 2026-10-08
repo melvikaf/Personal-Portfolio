@@ -32,3 +32,8 @@ button,input,summary{font-family:var(--body-font)}
 .button,.interest-controls button{font-family:var(--body-font);font-size:13px;font-weight:600}
 .project-metric strong{font:600 1.65rem/1.2 var(--body-font);letter-spacing:-.025em}
 @media(max-width:800px){.section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2,.project-archive summary h2{font-size:clamp(2rem,8vw,3rem)}.interest-note h3{font-size:1.6rem}}
+
+/* A strand of yarn unwinds along the thinking process as the page scrolls. */
+.process-yarn{position:absolute;left:0;top:0;width:125px;height:100%;overflow:visible;pointer-events:none}.yarn-guide{fill:none;stroke:var(--coral);stroke-width:2;opacity:.16;vector-effect:non-scaling-stroke}.yarn-strand{fill:none;stroke:var(--coral);stroke-width:3;stroke-linecap:round;stroke-dasharray:1 1;vector-effect:non-scaling-stroke}.yarn-ball circle{fill:var(--coral);stroke:var(--text);stroke-width:1.5}.yarn-ball path{fill:none;stroke:var(--text);stroke-width:1.2;stroke-linecap:round;opacity:.65}.process-step{z-index:1}.process-node{box-shadow:0 0 0 5px #eee8df}.theme-dark .process-node{box-shadow:0 0 0 5px #302c28}.process-step.is-active .process-node{box-shadow:0 0 0 5px #eee8df}.theme-dark .process-step.is-active .process-node{box-shadow:0 0 0 5px #302c28}
+@media(max-width:800px){.process-yarn{width:90px}}
+@media(prefers-reduced-motion:reduce){.yarn-strand{stroke-dashoffset:0!important}.yarn-ball{display:none}}
