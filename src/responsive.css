@@ -96,3 +96,15 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 .project-metric strong{white-space:nowrap;font-size:clamp(1.3rem,2.2vw,1.65rem)}
 @media(max-width:1100px){.project-card{grid-template-columns:30px minmax(0,1fr) 32px;gap:14px}.project-metric{grid-column:2;border:0;padding:0}.project-arrow{grid-column:3;grid-row:1;align-self:start}}
 @media(max-width:380px){.contact-section .contact-email{font-size:13px}.skills-cloud span,.tech-filter,.tag-row span{font-size:12px}}
+
+/* Clearer circular boundaries for contact links. */
+.contact-inner .social-icons a{border:1.5px solid #a78c8f;background:#f7f5f270}
+.theme-dark .contact-inner .social-icons a{border-color:#b99b9d;background:#f7f5f20a}
+.contact-inner .social-icons a:hover,.theme-dark .contact-inner .social-icons a:hover{border-color:var(--accent-ink);background:var(--accent);color:#1a1a1a}
+
+/* Theme changes affect color only, not navigation measurements. */
+.site-shell .nav-links{font-family:var(--body-font);font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0;gap:24px}
+@media(max-width:1000px){.site-shell .nav-links{gap:18px}}
+
+/* Carry the name’s rounded typography through the section headings. */
+.site-shell :is(.section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2,.projects-heading h1){font-family:var(--brand-font);font-weight:500;letter-spacing:-.015em;line-height:1.15}
