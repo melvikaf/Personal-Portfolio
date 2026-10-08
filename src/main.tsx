@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Analytics } from '@vercel/analytics/react'
-import { ArrowUpRight, Mail, MapPin, Menu, X, Search, Sun, Moon, Camera, Pause, Play, Phone, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowUpRight, Mail, MapPin, Menu, X, Search, Camera, Pause, Play, Phone, ChevronLeft, ChevronRight } from 'lucide-react'
 import './styles.css'
 import './process.css'
 import './happy.css'
@@ -73,15 +73,16 @@ const personalPhotos: Record<string, string> = {
 function CatMark({ className = '' }: { className?: string }) {
   return <svg className={`cat-mark ${className}`} viewBox="0 0 200 130" fill="none" aria-hidden="true">
     <path fill="currentColor" d="M38 110 48 22Q50 9 60 20L82 47Q100 42 119 47L143 20Q155 8 158 24L168 110Z" />
-    <ellipse cx="78" cy="82" rx="15" ry="12" fill="var(--cat-eye, #fffaf3)" /><ellipse cx="131" cy="82" rx="15" ry="12" fill="var(--cat-eye, #fffaf3)" />
-    <g className="cat-pupils" fill="currentColor"><ellipse cx="79" cy="82" rx="3" ry="7" /><ellipse cx="132" cy="82" rx="3" ry="7" /></g>
+    <g className="cat-open-eyes"><ellipse cx="78" cy="82" rx="15" ry="12" fill="var(--cat-eye, #fffaf3)" /><ellipse cx="131" cy="82" rx="15" ry="12" fill="var(--cat-eye, #fffaf3)" />
+    <g className="cat-pupils" fill="currentColor"><ellipse cx="79" cy="82" rx="3" ry="7" /><ellipse cx="132" cy="82" rx="3" ry="7" /></g></g>
+    <path className="cat-closed-eyes" d="M66 82Q78 94 90 82M119 82Q131 94 143 82" stroke="var(--cat-eye, #fffaf3)" strokeWidth="5" strokeLinecap="round" />
     <path d="M9 111H190" stroke="currentColor" strokeWidth="6" strokeLinecap="round" /><ellipse cx="39" cy="109" rx="16" ry="12" fill="currentColor" /><ellipse cx="169" cy="109" rx="16" ry="12" fill="currentColor" />
   </svg>
 }
 
-function CatCompanion() {
-  const [sleeping, setSleeping] = useState(false)
-  return <button className={`cat-companion ${sleeping ? 'is-sleeping' : ''}`} onClick={() => setSleeping(value => !value)} aria-label={sleeping ? 'Wake up the cat' : 'Let the cat nap'} aria-pressed={sleeping}><CatMark /><span>{sleeping ? 'zzz…' : 'a little company.'}</span></button>
+function CatCompanion({ sleeping, onToggle, compact = false }: { sleeping: boolean; onToggle: () => void; compact?: boolean }) {
+  const label = sleeping ? 'Wake the cat for light mode' : 'Let the cat sleep for dark mode'
+  return <button className={`cat-companion ${compact ? 'cat-theme-switch' : ''} ${sleeping ? 'is-sleeping' : ''}`} onClick={onToggle} aria-label={label} title={label} aria-pressed={sleeping}><CatMark /><span>{sleeping ? 'zzz… wake me?' : 'awake · let me nap?'}</span></button>
 }
 
 function PhotoSlot({ id, caption, className = '' }: { id: string; caption: string; className?: string }) {
@@ -161,7 +162,7 @@ function App() {
   const filteredProjects = projects.filter(project => `${project.title} ${project.description} ${project.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()) && selectedTech.every(tech => project.tags.includes(tech)))
   const toggleTech = (tech: string) => setSelectedTech(current => current.includes(tech) ? current.filter(item => item !== tech) : [...current, tech])
   return <div className={`site-shell ${theme === 'dark' ? 'theme-dark' : ''}`}>
-    <header className="nav-wrap"><a className="brand" href="#top" onClick={closeMenu} aria-label="Melvika Faustine home"><CatMark /><span className="brand-wordmark">melvika<span className="brand-dot">.</span></span></a><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button><nav className={`nav-links ${menuOpen ? 'is-open' : ''}`}><a href="#process" onClick={closeMenu}>My process</a><a href="#work" onClick={closeMenu}>Selected work</a><a href="#all-projects" onClick={closeMenu}>All projects</a><a href="#experience" onClick={closeMenu}>Experience</a><a href="#contact" onClick={closeMenu}>Contact</a><button className="theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>{theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}<span>{theme === 'light' ? 'Dark mode' : 'Light mode'}</span></button></nav></header>
+    <header className="nav-wrap"><a className="brand" href="#top" onClick={closeMenu} aria-label="Melvika Faustine home"><CatMark /><span className="brand-wordmark">melvika<span className="brand-dot">.</span></span></a><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button><nav className={`nav-links ${menuOpen ? 'is-open' : ''}`}><a href="#process" onClick={closeMenu}>My process</a><a href="#work" onClick={closeMenu}>Selected work</a><a href="#all-projects" onClick={closeMenu}>All projects</a><a href="#experience" onClick={closeMenu}>Experience</a><a href="#contact" onClick={closeMenu}>Contact</a><CatCompanion sleeping={theme === 'dark'} onToggle={toggleTheme} compact /></nav></header>
     <main id="top">
       <section className="hero section-grid">
         <div className="hero-copy">
@@ -173,7 +174,7 @@ function App() {
         </div>
         <div className="hero-visual hero-portrait">
           <PhotoSlot id="portrait" caption="Hi, that’s me (photo coming soon)." className="main-portrait" />
-          <CatCompanion />
+          <CatCompanion sleeping={theme === 'dark'} onToggle={toggleTheme} />
         </div>
       </section>
       <div className="studio-divider" aria-hidden="true"><span>data, with a human touch.</span><span>✳</span><span>a few things i’ve been up to ↓</span></div>

@@ -40,3 +40,10 @@ button,input,summary{font-family:var(--body-font)}
 
 /* The unreleased thread stays hidden; the ball empties as the strand grows. */
 .yarn-guide{display:none}.yarn-strand{stroke-width:3.5}.process-yarn{z-index:0}
+
+/* The same cat state controls light and dark mode everywhere. */
+.cat-closed-eyes{display:none}.is-sleeping .cat-open-eyes{display:none}.is-sleeping .cat-closed-eyes{display:block}
+.cat-companion.cat-theme-switch{display:flex;align-items:center;gap:8px;width:auto;margin:0;right:auto;transform:none;padding:6px 10px;border:1px solid var(--line);border-radius:30px}.cat-theme-switch .cat-mark{width:42px;height:30px;animation:none}.cat-theme-switch span{font:400 11px/1.4 var(--body-font);transform:none;white-space:nowrap}.brand .cat-pupils{animation:none}.site-shell{transition:background-color .3s ease,color .3s ease}
+@media(max-width:1000px) and (min-width:801px){.cat-theme-switch span{display:none}}
+@media(max-width:800px){.cat-companion.cat-theme-switch{width:100%;justify-content:center;padding:10px}}
+@media(prefers-reduced-motion:reduce){.site-shell{transition:none}}
