@@ -37,3 +37,6 @@ button,input,summary{font-family:var(--body-font)}
 .process-yarn{position:absolute;left:0;top:0;width:125px;height:100%;overflow:visible;pointer-events:none}.yarn-guide{fill:none;stroke:var(--coral);stroke-width:2;opacity:.16;vector-effect:non-scaling-stroke}.yarn-strand{fill:none;stroke:var(--coral);stroke-width:3;stroke-linecap:round;stroke-dasharray:1 1;vector-effect:non-scaling-stroke}.yarn-ball circle{fill:var(--coral);stroke:var(--text);stroke-width:1.5}.yarn-ball path{fill:none;stroke:var(--text);stroke-width:1.2;stroke-linecap:round;opacity:.65}.process-step{z-index:1}.process-node{box-shadow:0 0 0 5px #eee8df}.theme-dark .process-node{box-shadow:0 0 0 5px #302c28}.process-step.is-active .process-node{box-shadow:0 0 0 5px #eee8df}.theme-dark .process-step.is-active .process-node{box-shadow:0 0 0 5px #302c28}
 @media(max-width:800px){.process-yarn{width:90px}}
 @media(prefers-reduced-motion:reduce){.yarn-strand{stroke-dashoffset:0!important}.yarn-ball{display:none}}
+
+/* The unreleased thread stays hidden; the ball empties as the strand grows. */
+.yarn-guide{display:none}.yarn-strand{stroke-width:3.5}.process-yarn{z-index:0}
