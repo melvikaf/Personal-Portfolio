@@ -14,3 +14,21 @@
 .hero .hero-name{font-weight:600;letter-spacing:-.015em;line-height:1.12}
 .section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2{font-weight:500;letter-spacing:-.025em}
 .interest-note h3{letter-spacing:-.02em}
+
+/* Two families, one consistent hierarchy. */
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/dm-sans-400.ttf') format('truetype')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/dm-sans-600.ttf') format('truetype')}
+:root{--body-font:'DM Sans',Arial,sans-serif;--display:var(--body-font);--mono:var(--body-font);--brand-font:'Fredoka','Arial Rounded MT Bold',sans-serif}
+.site-shell{font-family:var(--body-font);font-size:15px;line-height:1.65}
+button,input,summary{font-family:var(--body-font)}
+.hero .hero-name,.brand-wordmark{font-family:var(--brand-font);font-weight:600;letter-spacing:-.015em}
+.section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2,.project-archive summary h2{font:600 clamp(2.2rem,4.3vw,3.7rem)/1.12 var(--body-font);letter-spacing:-.04em}
+.experience-item h3,.education-item h3,.leadership-item h3,.project-main h3,.process-step h3,.interest-note h3{font:600 clamp(1.4rem,2.4vw,1.9rem)/1.25 var(--body-font);letter-spacing:-.025em}
+.hero-intro,.heading-note,.process-intro,.interest-note p,.experience-item ul,.education-item p:last-child,.leadership-item ul,.project-main p,.process-step>div:last-child>p:last-child{font-family:var(--body-font);font-size:15px;line-height:1.75}
+.eyebrow,.process-kicker,.filter-label{font:600 11px/1.5 var(--body-font);letter-spacing:.1em}
+.hero-greeting{font:400 18px/1.5 var(--body-font);letter-spacing:0}
+.nav-links,.theme-toggle,.experience-role,.tag-row span,.project-link,.archive-toggle,.skills-cloud span,.contact-meta,.contact-email,.tech-filter,.clear-filters,.project-search input,.search-count{font-family:var(--body-font);font-size:13px;line-height:1.5;letter-spacing:0}
+.experience-meta,.education-meta,.leadership-meta,.interest-page,.photo-empty span,.photo-slot figcaption,.project-number,footer{font:400 12px/1.6 var(--body-font);letter-spacing:0}
+.button,.interest-controls button{font-family:var(--body-font);font-size:13px;font-weight:600}
+.project-metric strong{font:600 1.65rem/1.2 var(--body-font);letter-spacing:-.025em}
+@media(max-width:800px){.section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2,.project-archive summary h2{font-size:clamp(2rem,8vw,3rem)}.interest-note h3{font-size:1.6rem}}
