@@ -144,3 +144,24 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 @media(min-width:801px){.main-portrait .photo-window{aspect-ratio:16/10}}
 @media(max-width:800px){.main-portrait .photo-window{aspect-ratio:4/5}}
 @media(min-width:801px){.main-portrait{max-width:min(460px,50svh)}}
+
+/* Give every framed photograph a tactile polaroid shadow, including the
+   landing portrait and the education, experience, and leadership photos. */
+.site-shell .photo-slot{
+  box-shadow:10px 12px 18px rgba(42,74,58,.16);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s cubic-bezier(.22,1,.36,1)
+}
+.site-shell .photo-slot:hover{
+  box-shadow:14px 17px 24px rgba(42,74,58,.2)
+}
+.site-shell .section-photo:hover{transform:translateY(-5px) rotate(-1deg)}
+.site-shell .main-portrait:hover{transform:translateY(-5px) rotate(2deg)}
+.site-shell .carousel-photo:hover{transform:translateY(-5px) rotate(-2deg)}
+.theme-dark .site-shell .photo-slot{box-shadow:10px 12px 18px rgba(0,0,0,.3)}
+.theme-dark .site-shell .photo-slot:hover{box-shadow:14px 17px 24px rgba(0,0,0,.4)}
+@media(max-width:800px){
+  .site-shell .photo-slot{box-shadow:7px 9px 14px rgba(42,74,58,.16)}
+  .site-shell .photo-slot:hover{box-shadow:7px 9px 14px rgba(42,74,58,.16)}
+  .theme-dark .site-shell .photo-slot{box-shadow:7px 9px 14px rgba(0,0,0,.3)}
+  .theme-dark .site-shell .photo-slot:hover{box-shadow:7px 9px 14px rgba(0,0,0,.3)}
+}
