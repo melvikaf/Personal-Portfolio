@@ -123,7 +123,7 @@ function InterestsCarousel() {
   const touchStart = useRef<number | null>(null)
   const move = (direction: number) => setIndex(current => (current + direction + interests.length) % interests.length)
   const interest = interests[index]
-  const captions = ['Books & film nights', 'Crème brûlée discoveries', 'Always learning', 'Somewhere new', 'On repeat']
+  const captions = ['Pride and Prejudice', 'Crème brûlée discoveries', 'Stormhacks 2026', 'Paris. 2019.', 'Hazzlet. 2025.']
   return <div className="interests-carousel" role="region" aria-roledescription="carousel" aria-label="Outside of work" onKeyDown={event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1) }
   }}>
