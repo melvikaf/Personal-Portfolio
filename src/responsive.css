@@ -145,6 +145,29 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 @media(max-width:800px){.main-portrait .photo-window{aspect-ratio:4/5}}
 @media(min-width:801px){.main-portrait{max-width:min(460px,50svh)}}
 
+/* Keep supporting photos compact and let the experience/education copy lead. */
+@media(min-width:801px){
+  .experience-layout,.education-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:clamp(28px,5vw,72px);align-items:start}
+  .experience-layout .section-photo,.education-layout .section-photo{width:100%;max-width:320px;margin:4px 0 0 auto}
+}
+@media(max-width:800px){
+  .experience-layout,.education-layout{display:flex;flex-direction:column;gap:24px}
+  .experience-layout .section-photo,.education-layout .section-photo{width:calc(100% - 12px);max-width:360px;margin:0 auto}
+}
+
+/* Place the supporting photos beside the entries they describe. */
+@media(min-width:801px){
+  .education-layout{align-items:center}
+  .experience-item:has(.timeline-photo),.leadership-item:has(.timeline-photo){grid-template-columns:170px minmax(0,1fr) 260px;gap:32px;align-items:center}
+  .timeline-photo{width:260px;max-width:100%;margin:0 auto;transform:rotate(-1deg);padding:8px}
+  .timeline-photo .photo-window{aspect-ratio:auto!important;height:auto}
+  .timeline-photo .photo-window img{display:block;width:100%;height:auto!important;object-fit:contain}
+  .timeline-photo figcaption{font-size:11px;line-height:1.4;padding:10px 3px 2px}
+}
+@media(max-width:800px){
+  .timeline-photo{width:calc(100% - 12px);max-width:340px;margin:24px auto 0;transform:rotate(-1deg)}
+}
+
 /* Give every framed photograph a tactile polaroid shadow, including the
    landing portrait and the education, experience, and leadership photos. */
 .site-shell .photo-slot{
@@ -165,3 +188,18 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
   .theme-dark .site-shell .photo-slot{box-shadow:7px 9px 14px rgba(0,0,0,.3)}
   .theme-dark .site-shell .photo-slot:hover{box-shadow:7px 9px 14px rgba(0,0,0,.3)}
 }
+
+/* Polaroids respond like small physical cards: lift on hover, open for a closer look. */
+.site-shell .photo-slot{position:relative;z-index:0;cursor:zoom-in;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s cubic-bezier(.22,1,.36,1)}
+.site-shell .photo-slot:hover,.site-shell .photo-slot:focus-visible{z-index:2;transform:perspective(900px) translateY(-7px) rotateX(2deg) rotateY(-3deg) scale(1.025);box-shadow:14px 20px 28px rgba(42,74,58,.22)}
+.site-shell .photo-slot.is-expanded{z-index:8;cursor:zoom-out;transform:perspective(1000px) translateY(-4px) rotateX(2deg) rotateY(-5deg) scale(1.08);box-shadow:18px 26px 38px rgba(42,74,58,.28)}
+.site-shell .photo-slot:focus-visible{outline:2px solid var(--accent-ink);outline-offset:5px}
+.theme-dark .site-shell .photo-slot:hover,.theme-dark .site-shell .photo-slot:focus-visible{box-shadow:14px 20px 28px rgba(0,0,0,.45)}
+.theme-dark .site-shell .photo-slot.is-expanded{box-shadow:18px 26px 38px rgba(0,0,0,.55)}
+@media(max-width:800px){
+  .site-shell .photo-slot:hover,.site-shell .photo-slot:focus-visible{transform:translateY(-4px) scale(1.015);box-shadow:9px 13px 20px rgba(42,74,58,.2)}
+  .site-shell .photo-slot.is-expanded{transform:translateY(-2px) scale(1.035);box-shadow:11px 16px 24px rgba(42,74,58,.24)}
+  .theme-dark .site-shell .photo-slot:hover,.theme-dark .site-shell .photo-slot:focus-visible{box-shadow:9px 13px 20px rgba(0,0,0,.42)}
+  .theme-dark .site-shell .photo-slot.is-expanded{box-shadow:11px 16px 24px rgba(0,0,0,.5)}
+}
+@media(prefers-reduced-motion:reduce){.site-shell .photo-slot{transition:none}}
