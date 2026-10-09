@@ -82,9 +82,42 @@ function CatMark({ className = '' }: { className?: string }) {
   </svg>
 }
 
-function CatCompanion({ sleeping, onToggle, compact = false }: { sleeping: boolean; onToggle: () => void; compact?: boolean }) {
+function CatCompanion({ sleeping, onToggle, professional = false, compact = false }: { sleeping: boolean; onToggle: () => void; professional?: boolean; compact?: boolean }) {
   const label = sleeping ? 'Wake the cat for light mode' : 'Let the cat sleep for dark mode'
-  return <button className={`cat-companion ${compact ? 'cat-theme-switch' : ''} ${sleeping ? 'is-sleeping' : ''}`} onClick={onToggle} aria-label={label} aria-pressed={sleeping}><CatMark /><span>{sleeping ? 'zzz… wake me?' : 'awake · let me nap?'}</span></button>
+  const [glassesState, setGlassesState] = useState<'on' | 'off' | 'removing'>(professional ? 'on' : 'off')
+  useEffect(() => {
+    if (professional) { setGlassesState('on'); return }
+    setGlassesState('removing')
+    const timeout = window.setTimeout(() => setGlassesState('off'), 480)
+    return () => window.clearTimeout(timeout)
+  }, [professional])
+  return <button className={`cat-companion ${compact ? 'cat-theme-switch' : ''} ${sleeping ? 'is-sleeping' : ''} ${professional ? 'is-professional' : ''}`} onClick={onToggle} aria-label={label} aria-pressed={sleeping}><span className="cat-figure"><CatMark /><svg className={`cat-glasses is-${glassesState}`} viewBox="0 0 200 130" aria-hidden="true"><circle cx="78" cy="82" r="17" /><circle cx="131" cy="82" r="17" /><path d="M95 82h19M61 82H49M148 82h12" /></svg></span><span>{sleeping ? 'zzz… wake me?' : 'awake · let me nap?'}</span></button>
+}
+
+function playModeCue() {
+  if (typeof window === 'undefined') return
+  const AudioContextClass = window.AudioContext
+  if (AudioContextClass) {
+    const context = new AudioContextClass()
+    const oscillator = context.createOscillator()
+    const gain = context.createGain()
+    oscillator.type = 'sine'
+    oscillator.frequency.setValueAtTime(520, context.currentTime)
+    oscillator.frequency.exponentialRampToValueAtTime(760, context.currentTime + 0.09)
+    gain.gain.setValueAtTime(0.0001, context.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.045, context.currentTime + 0.015)
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.14)
+    oscillator.connect(gain).connect(context.destination)
+    oscillator.start()
+    oscillator.stop(context.currentTime + 0.15)
+    oscillator.addEventListener('ended', () => { void context.close() }, { once: true })
+  }
+  if ('vibrate' in navigator) navigator.vibrate(18)
+}
+
+function ProfessionalToggle({ professional, onToggle }: { professional: boolean; onToggle: () => void }) {
+  const label = professional ? 'Switch to the full portfolio' : 'Switch to the shorter professional portfolio'
+  return <button className={`glasses-toggle ${professional ? 'is-active' : ''}`} onClick={onToggle} aria-pressed={professional} aria-label={label} title={label}>{professional ? <svg className="paw-icon" viewBox="0 0 32 20" aria-hidden="true"><ellipse cx="16" cy="14" rx="6.5" ry="4.5" /><circle cx="8" cy="7" r="2.6" /><circle cx="13" cy="4" r="2.6" /><circle cx="19" cy="4" r="2.6" /><circle cx="24" cy="7" r="2.6" /></svg> : <svg viewBox="0 0 32 20" aria-hidden="true"><circle cx="8" cy="10" r="6" /><circle cx="24" cy="10" r="6" /><path d="M14 10h4M2 10H0M30 10h2" /></svg>}<span>{professional ? 'Full portfolio' : 'Short CV'}</span></button>
 }
 
 function SocialLinks() {
@@ -186,14 +219,15 @@ function App() {
   const isProjectsPage = window.location.pathname.replace(/\/$/, '') === '/projects'
   useEffect(() => { document.title = isProjectsPage ? 'Projects — Melvika Faustine' : 'Melvika Faustine — Data Science Student' }, [isProjectsPage])
   const [selectedTech, setSelectedTech] = useState<string[]>([])
-  const [menuOpen, setMenuOpen] = useState(false); const [query, setQuery] = useState(''); const [theme, setTheme] = useState<'light' | 'dark'>(() => { if (typeof window === 'undefined') return 'light'; const saved = window.localStorage.getItem('portfolio-theme'); if (saved === 'dark' || saved === 'light') return saved; return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }); const closeMenu = () => setMenuOpen(false)
+  const [menuOpen, setMenuOpen] = useState(false); const [query, setQuery] = useState(''); const [professionalMode, setProfessionalMode] = useState(false); const [theme, setTheme] = useState<'light' | 'dark'>(() => { if (typeof window === 'undefined') return 'light'; const saved = window.localStorage.getItem('portfolio-theme'); if (saved === 'dark' || saved === 'light') return saved; return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }); const closeMenu = () => setMenuOpen(false)
+  const toggleProfessionalMode = () => { playModeCue(); setProfessionalMode(value => !value) }
   useEffect(() => { const saved = window.localStorage.getItem('portfolio-theme'); if (saved) return; const preference = window.matchMedia('(prefers-color-scheme: dark)'); const updateFromBrowser = (event: MediaQueryListEvent) => setTheme(event.matches ? 'dark' : 'light'); preference.addEventListener('change', updateFromBrowser); return () => preference.removeEventListener('change', updateFromBrowser) }, [])
   const toggleTheme = () => { const nextTheme = theme === 'light' ? 'dark' : 'light'; setTheme(nextTheme); window.localStorage.setItem('portfolio-theme', nextTheme) }
   const selectedProjects = projects.filter(project => project.featured)
   const filteredProjects = projects.filter(project => `${project.title} ${project.description} ${project.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase()) && selectedTech.every(tech => project.tags.includes(tech)))
   const toggleTech = (tech: string) => setSelectedTech(current => current.includes(tech) ? current.filter(item => item !== tech) : [...current, tech])
-  return <div className={`site-shell ${theme === 'dark' ? 'theme-dark' : ''}`}>
-    <header className="nav-wrap"><a className="brand" href="/#top" onClick={closeMenu} aria-label="Melvika Faustine home"><CatMark /><span className="brand-wordmark">melvika<span className="brand-dot">.</span></span></a><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button><nav className={`nav-links ${menuOpen ? 'is-open' : ''}`}><a href="/#experience" onClick={closeMenu}>Experience</a><a href="/#work" onClick={closeMenu}>Selected work</a><a href="/#process" onClick={closeMenu}>My process</a><a href="/#education" onClick={closeMenu}>Education</a><a href="/#leadership" onClick={closeMenu}>Volunteering</a><a href="/projects/" onClick={closeMenu}>All projects</a><a href="/#contact" onClick={closeMenu}>Contact</a></nav></header>
+  return <div className={`site-shell ${theme === 'dark' ? 'theme-dark' : ''} ${professionalMode ? 'professional-mode' : ''}`}>
+    <header className="nav-wrap"><a className="brand" href="/#top" onClick={closeMenu} aria-label="Melvika Faustine home"><CatMark /><span className="brand-wordmark">melvika<span className="brand-dot">.</span></span></a><div className="header-actions"><div className="header-mode-toggle"><ProfessionalToggle professional={professionalMode} onToggle={toggleProfessionalMode} /></div><button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>{menuOpen ? <X size={22} /> : <Menu size={22} />}</button></div><nav className={`nav-links ${menuOpen ? 'is-open' : ''}`}><a href="/#experience" onClick={closeMenu}>Experience</a><a href="/#work" onClick={closeMenu}>Selected work</a><a href="/#process" onClick={closeMenu}>My process</a><a href="/#education" onClick={closeMenu}>Education</a><a href="/#leadership" onClick={closeMenu}>Volunteering</a><a href="/projects/" onClick={closeMenu}>All projects</a><a href="/#contact" onClick={closeMenu}>Contact</a></nav></header>
     <main id="top">
       {isProjectsPage ? (<section className="all-projects-section" id="all-projects"><a className="text-link projects-back" href="/#work">← Back to selected work</a><div className="section-heading projects-heading"><div><p className="eyebrow">Things I’ve built</p><h1>All projects</h1></div></div><div className="archive-content"><p className="heading-note">Search by project, tool, or area of interest.</p><label className="project-search"><Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search projects, tools, or technologies..." aria-label="Search all projects" /></label><div className="tech-filter-row"><span className="filter-label">Filter by stack</span><div className="tech-filters">{projectTech.map(tech => <button className={`tech-filter ${selectedTech.includes(tech) ? 'is-selected' : ''}`} key={tech} onClick={() => toggleTech(tech)} aria-pressed={selectedTech.includes(tech)}>{tech}</button>)}</div>{selectedTech.length > 0 && <button className="clear-filters" onClick={() => setSelectedTech([])}>Clear filters</button>}</div><p className="search-count">Showing {filteredProjects.length} of {projects.length} projects</p><div className="project-list">{filteredProjects.length ? filteredProjects.map(project => <ProjectCard key={project.number} project={project} />) : <div className="empty-projects">No projects match that search yet.</div>}</div></div></section>) : <>
       <section className="hero section-grid">
@@ -206,7 +240,7 @@ function App() {
         </div>
         <div className="hero-visual hero-portrait">
           <PhotoSlot id="portrait" caption="Hey, that’s me!" className="main-portrait" />
-          <CatCompanion sleeping={theme === 'dark'} onToggle={toggleTheme} />
+          <CatCompanion sleeping={theme === 'dark'} onToggle={toggleTheme} professional={professionalMode} />
         </div>
       </section>
       <div className="studio-divider" aria-hidden="true"><span>data, with a human touch.</span><span className="divider-yarn"><svg viewBox="0 0 48 40" fill="none"><circle cx="20" cy="20" r="14" fill="currentColor" fillOpacity=".15" stroke="currentColor" strokeWidth="2" /><path d="M10 10Q17 20 30 28M7 17Q17 27 24 33M16 7Q25 15 33 21M9 28Q16 13 26 8M17 33Q23 19 33 15M32 26C37 32 38 19 42 25Q46 33 46 29" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg></span><span>a few things i’ve been up to ↓</span></div>

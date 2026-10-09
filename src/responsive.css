@@ -159,7 +159,7 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 /* Place the supporting photos beside the entries they describe. */
 @media(min-width:801px){
   .education-layout{align-items:center}
-  .experience-item:has(.timeline-photo),.leadership-item:has(.timeline-photo){grid-template-columns:170px minmax(0,1fr) 260px;gap:32px;align-items:center}
+  .experience-item:has(.timeline-photo),.leadership-item:has(.timeline-photo){grid-template-columns:220px minmax(0,1fr) 260px;gap:32px;align-items:center}
   .timeline-photo{width:260px;max-width:100%;margin:0 auto;transform:rotate(-1deg);padding:8px}
   .timeline-photo .photo-window{aspect-ratio:auto!important;height:auto}
   .timeline-photo .photo-window img{display:block;width:100%;height:auto!important;object-fit:contain}
@@ -207,3 +207,64 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
   .theme-dark .site-shell .photo-slot.is-expanded{box-shadow:11px 16px 24px rgba(0,0,0,.5)}
 }
 @media(prefers-reduced-motion:reduce){.site-shell .photo-slot{transition:none}}
+
+/* Short CV mode keeps the useful evidence and hides the more personal detours. */
+.professional-mode .process-section,.professional-mode .education-section,.professional-mode .leadership-section,.professional-mode .interests-section{display:none}
+.professional-mode .nav-links a[href="/#process"],.professional-mode .nav-links a[href="/#education"],.professional-mode .nav-links a[href="/#leadership"]{display:none}
+.cat-tools{position:relative;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.glasses-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--text);padding:7px 11px;font:11px var(--body-font);cursor:pointer;transition:transform .25s ease,background .25s ease,color .25s ease}
+.cat-tools .glasses-toggle{position:absolute;top:-28px;right:0;z-index:10}
+.glasses-toggle svg{width:24px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.glasses-toggle svg.paw-icon{fill:currentColor;stroke:none}
+.glasses-toggle:hover,.glasses-toggle.is-active{background:var(--accent);color:#191919;transform:translateY(-2px)}
+.cat-companion{position:relative}
+.cat-companion .cat-glasses{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;pointer-events:none;z-index:2}
+.professional-mode .cat-companion .cat-glasses{stroke:var(--accent)}
+@media(max-width:800px){
+  .cat-tools{align-items:center}
+  .cat-tools .glasses-toggle{top:-22px;right:4px}
+}
+
+/* Keep the professional-mode control beside the cat without covering it. */
+.cat-tools{flex-direction:column;align-items:center;justify-content:flex-start;gap:4px}
+.cat-tools .cat-companion{order:1}
+.cat-tools .glasses-toggle{position:static;order:2;width:auto;height:32px;padding:6px 11px;margin:0;justify-content:center;border-radius:999px}
+.cat-tools .glasses-toggle span{display:inline}
+.cat-companion .cat-glasses{animation:catBreathe 3.5s ease-in-out infinite;transform-origin:100px 111px}
+.cat-companion.is-sleeping .cat-glasses{animation-duration:6s}
+@media(max-width:800px){.cat-tools{gap:2px}.cat-tools .glasses-toggle{margin:0 0 4px auto}.cat-tools .cat-companion{order:1}}
+
+/* The mode switch belongs with the site controls; the cat and glasses share one motion wrapper. */
+.header-actions{display:flex;align-items:center;gap:12px;order:3}
+.header-mode-toggle .glasses-toggle{position:static;width:auto;height:32px;padding:6px 11px;border-radius:999px}
+.header-mode-toggle .glasses-toggle span{display:inline}
+.cat-companion .cat-figure{position:relative;display:block;width:100%;height:auto;animation:catBreathe 3.5s ease-in-out infinite;transform-origin:bottom}
+.cat-companion .cat-figure .cat-mark{animation:none}
+.cat-companion .cat-figure .cat-glasses{animation:none;position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;pointer-events:none}
+.cat-companion.is-sleeping .cat-figure{animation-duration:6s}
+.cat-companion.is-sleeping .cat-figure .cat-glasses{stroke:var(--accent)}
+.cat-companion{color:#000;--cat-eye:#fff}
+.theme-dark .cat-companion{color:#fff;--cat-eye:#1b1b1b}
+.cat-companion .cat-figure .cat-mark{color:#000!important}
+.theme-dark .cat-companion .cat-figure .cat-mark{color:#fff!important}
+.cat-companion .cat-figure .cat-glasses{opacity:0;transform:translateY(-22px) scale(.45) rotate(-10deg);transform-origin:center;transition:opacity .2s ease,transform .2s ease}
+.cat-companion .cat-figure .cat-glasses.is-on{opacity:1;animation:glassesOn .55s cubic-bezier(.22,1,.36,1) forwards!important}
+.cat-companion .cat-figure .cat-glasses.is-removing{opacity:1;animation:glassesOff .48s cubic-bezier(.55,.08,.68,.53) forwards!important}
+@keyframes glassesOn{0%{opacity:0;transform:translateY(-24px) scale(.42) rotate(-12deg)}65%{opacity:1;transform:translateY(3px) scale(1.06) rotate(2deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@keyframes glassesOff{0%{opacity:1;transform:translate(0,0) rotate(0) scale(1)}55%{opacity:1;transform:translate(34px,-8px) rotate(20deg) scale(.92)}100%{opacity:0;transform:translate(74px,16px) rotate(42deg) scale(.55)}}
+@media(prefers-reduced-motion:reduce){
+  .cat-companion .cat-figure .cat-glasses{animation:none!important;transition:none}
+  .cat-companion .cat-figure .cat-glasses.is-on{opacity:1;transform:none}
+  .cat-companion .cat-figure .cat-glasses.is-off,.cat-companion .cat-figure .cat-glasses.is-removing{opacity:0;transform:none}
+}
+@media(max-width:800px){.header-actions{gap:6px}.header-mode-toggle .glasses-toggle{height:30px;padding:5px 9px}.header-mode-toggle .glasses-toggle span{display:none}}
+.contact-section{border-radius:36px}
+@media(max-width:800px){.contact-section{border-radius:24px}}
+
+/* Keep the human-touch divider visible in both modes, including its mobile cue. */
+@media(max-width:800px){
+  .studio-divider{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding-block:20px}
+  .studio-divider span:first-child{grid-column:1/-1;text-align:center}
+  .studio-divider .divider-yarn{grid-column:1;justify-self:start}
+  .studio-divider span:last-child{display:block;grid-column:2;justify-self:end;text-align:right;font-size:10px;white-space:nowrap}
+}
