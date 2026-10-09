@@ -32,6 +32,8 @@ body{background:var(--bg);color:var(--text)}.nav-links{color:var(--muted)}.nav-l
 @media(max-width:800px){.postcard:nth-child(n){transform:none}.postcard:hover,.postcard.is-open{transform:translateY(-4px)}.postcard p{max-height:none;opacity:1;transform:none}.postcard-top small{opacity:1;transform:none}}
 .postcard{will-change:transform}.postcard p{will-change:max-height,opacity,transform}
 @media(max-width:800px){.postcard,.project-card,.experience-item,.leadership-item,.interest-card,.skills-cloud span{will-change:auto}.postcard:hover,.postcard.is-open{transform:none}.project-card:hover,.experience-item:hover,.leadership-item:hover,.interest-card:hover{transform:none}.hero-copy,.hero-visual{animation-duration:.65s}.visual-note{animation:none}.chart-line{animation-duration:1.25s}}
+.postcard{box-shadow:8px 11px 0 rgba(42,74,58,.14);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s cubic-bezier(.22,1,.36,1),background .25s ease}.postcard:hover,.postcard.is-open{box-shadow:12px 17px 0 rgba(42,74,58,.18)}.theme-dark .postcard{box-shadow:8px 11px 0 rgba(0,0,0,.22)}
+@media(max-width:800px){.postcard:hover,.postcard.is-open{box-shadow:8px 11px 0 rgba(42,74,58,.14)}}
 
 /* A concise introduction with space for a future portrait. */
 .hero.section-grid{min-height:650px;grid-template-columns:1.1fr 1fr;gap:56px;padding-top:48px;padding-bottom:48px}
