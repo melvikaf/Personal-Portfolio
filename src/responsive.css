@@ -124,5 +124,9 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 .hero .hero-name{font-size:clamp(2.6rem,8.5svh,4rem);margin-bottom:14px}.hero-intro{font-size:14px}.hero-greeting{font-size:16px}.hero-actions{margin-top:16px}.hero-focus{font-size:12px}.hero-actions .button{min-height:42px;padding:11px 18px;font-size:13px}
 }
 
-/* Keep everyone visible in the work and club photographs. */
-.section-photo .photo-window:has(img){aspect-ratio:auto;max-height:none}.section-photo .photo-window img{height:auto;object-fit:contain}.photo-interest-02 img{object-position:50% 40%}
+/* Scale personal photos down while keeping group photographs uncropped. */
+.section-photo:has(img){width:calc(100% - 24px);max-width:400px;padding:clamp(8px,2vw,12px);box-sizing:border-box}
+.section-photo .photo-window:has(img){aspect-ratio:auto;max-height:none;background:transparent}
+.section-photo .photo-window img{width:100%;height:auto;max-height:none;object-fit:contain}
+.section-photo:has(img) figcaption{padding:14px 4px 8px}
+.photo-interest-02 img{object-position:50% 40%}
