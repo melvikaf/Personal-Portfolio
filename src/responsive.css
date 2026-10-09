@@ -263,8 +263,13 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 
 /* Keep the human-touch divider visible in both modes, including its mobile cue. */
 @media(max-width:800px){
-  .studio-divider{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding-block:20px}
-  .studio-divider span:first-child{grid-column:1/-1;text-align:center}
-  .studio-divider .divider-yarn{grid-column:1;justify-self:start}
-  .studio-divider span:last-child{display:block;grid-column:2;justify-self:end;text-align:right;font-size:10px;white-space:nowrap}
+  .studio-divider{display:grid;grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr);align-items:center;gap:8px;padding-block:18px;font-size:clamp(8px,2.5vw,10px);letter-spacing:.02em}
+  .studio-divider span:first-child{grid-column:auto;text-align:left;white-space:nowrap}
+  .studio-divider .divider-yarn{grid-column:auto;justify-self:center;flex-basis:32px}
+  .studio-divider span:last-child{display:block;grid-column:auto;justify-self:end;text-align:right;font-size:inherit;white-space:nowrap}
+  .experience-section{padding-top:clamp(44px,10vw,60px)}
+  .experience-section .section-heading{margin-bottom:28px}
+  .experience-section .heading-note{max-width:34ch}
+  .experience-item,.timeline-content,.timeline-content ul{min-width:0}
+  .timeline-content{overflow-wrap:normal;word-break:normal}
 }
