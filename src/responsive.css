@@ -108,3 +108,21 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 
 /* Carry the name’s rounded typography through the section headings. */
 .site-shell :is(.section-heading h2,.skills-section h2,.process-sticky h2,.contact-section h2,.projects-heading h1){font-family:var(--brand-font);font-weight:500;letter-spacing:-.015em;line-height:1.15}
+
+/* Fit the introduction, portrait, and cat within the initial desktop viewport. */
+@media(min-width:801px){
+.nav-wrap{height:clamp(72px,11svh,100px)}
+.hero.section-grid{min-height:0;padding-top:clamp(20px,4svh,44px);padding-bottom:clamp(24px,4svh,44px);align-items:center}
+.hero .hero-name{font-size:clamp(3rem,min(7vw,11svh),6rem);margin-bottom:20px}
+.hero-greeting{margin-bottom:12px}.hero-intro{margin-bottom:12px;line-height:1.65}.hero-focus{margin-top:12px;margin-bottom:0}.hero-availability{margin-top:6px}.hero-actions{margin-top:22px}
+.hero-portrait{max-width:390px;justify-self:center}
+.main-portrait{max-width:min(350px,40svh)}
+.cat-companion{width:min(210px,25svh);margin-top:-48px;right:0}
+.cat-companion span{line-height:1.5}
+}
+@media(min-width:801px) and (max-height:650px){
+.hero .hero-name{font-size:clamp(2.6rem,8.5svh,4rem);margin-bottom:14px}.hero-intro{font-size:14px}.hero-greeting{font-size:16px}.hero-actions{margin-top:16px}.hero-focus{font-size:12px}.hero-actions .button{min-height:42px;padding:11px 18px;font-size:13px}
+}
+
+/* Keep everyone visible in the work and club photographs. */
+.section-photo .photo-window:has(img){aspect-ratio:auto;max-height:none}.section-photo .photo-window img{height:auto;object-fit:contain}.photo-interest-02 img{object-position:50% 40%}

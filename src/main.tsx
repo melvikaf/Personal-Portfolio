@@ -67,8 +67,8 @@ const interests = [
 
 // Add paths such as '/photos/campus.jpg' here when your photos are ready.
 const personalPhotos: Record<string, string> = {
-  portrait: '', work: '', campus: '', community: '',
-  'interest-01': '', 'interest-02': '', 'interest-03': '', 'interest-04': '', 'interest-05': '',
+  portrait: '', work: '/Nettwerk_Christmas_Dinner.jpg', campus: '', community: '/Blueprint_Outing.jpg',
+  'interest-01': '', 'interest-02': '/Creme_Brulee.jpg', 'interest-03': '', 'interest-04': '', 'interest-05': '',
 }
 
 function CatMark({ className = '' }: { className?: string }) {
@@ -104,7 +104,7 @@ function PhotoSlot({ id, caption, className = '' }: { id: string; caption: strin
   const src = personalPhotos[id]
   const [failed, setFailed] = useState(false)
   return <figure className={`photo-slot ${className}`}>
-    <div className="photo-window">{src && !failed ? <img src={src} alt={caption} loading={id === 'portrait' ? 'eager' : 'lazy'} onError={() => setFailed(true)} /> : <div className="photo-empty" role="img" aria-label={`Photo placeholder: ${caption}`}><Camera size={28} strokeWidth={1} /><span>Your photo here</span></div>}</div>
+    <div className={`photo-window photo-${id}`}>{src && !failed ? <img src={src} alt={caption} loading={id === 'portrait' ? 'eager' : 'lazy'} onError={() => setFailed(true)} /> : <div className="photo-empty" role="img" aria-label={`Photo placeholder: ${caption}`}><Camera size={28} strokeWidth={1} /><span>Your photo here</span></div>}</div>
     <figcaption>{caption}</figcaption>
   </figure>
 }
@@ -123,7 +123,7 @@ function InterestsCarousel() {
   const touchStart = useRef<number | null>(null)
   const move = (direction: number) => setIndex(current => (current + direction + interests.length) % interests.length)
   const interest = interests[index]
-  const captions = ['Books & film nights', 'Something I cooked', 'Little discoveries', 'Somewhere new', 'On repeat']
+  const captions = ['Books & film nights', 'Crème brûlée discoveries', 'Little discoveries', 'Somewhere new', 'On repeat']
   return <div className="interests-carousel" role="region" aria-roledescription="carousel" aria-label="Outside of work" onKeyDown={event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1) }
   }}>
@@ -196,12 +196,12 @@ function App() {
         </div>
       </section>
       <div className="studio-divider" aria-hidden="true"><span>data, with a human touch.</span><span className="divider-yarn"><svg viewBox="0 0 48 40" fill="none"><circle cx="20" cy="20" r="14" fill="currentColor" fillOpacity=".15" stroke="currentColor" strokeWidth="2" /><path d="M10 10Q17 20 30 28M7 17Q17 27 24 33M16 7Q25 15 33 21M9 28Q16 13 26 8M17 33Q23 19 33 15M32 26C37 32 38 19 42 25Q46 33 46 29" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg></span><span>a few things i’ve been up to ↓</span></div>
-      <section className="experience-section" id="experience"><div className="section-heading"><div><p className="eyebrow">Healthcare · SaaS · Music</p><h2>Work <em>experience</em></h2></div><p className="heading-note">Three data-focused co-ops across healthcare, SaaS, and music.</p></div><PhotoSlot id="work" caption="A moment from work" className="section-photo work-photo" /><div className="experience-list">{experience.map(item => <article className="experience-item timeline-row" key={item.company}><div className="experience-meta timeline-meta"><span>{item.dates}</span><span className="timeline-location">{item.location}</span></div><div className="timeline-content"><h3>{item.company}</h3><p className="experience-role">{item.role}</p><ul>{item.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul></div></article>)}</div></section>
+      <section className="experience-section" id="experience"><div className="section-heading"><div><p className="eyebrow">Healthcare · SaaS · Music</p><h2>Work <em>experience</em></h2></div><p className="heading-note">Three data-focused co-ops across healthcare, SaaS, and music.</p></div><PhotoSlot id="work" caption="Christmas dinner with my Nettwerk teammates" className="section-photo work-photo" /><div className="experience-list">{experience.map(item => <article className="experience-item timeline-row" key={item.company}><div className="experience-meta timeline-meta"><span>{item.dates}</span><span className="timeline-location">{item.location}</span></div><div className="timeline-content"><h3>{item.company}</h3><p className="experience-role">{item.role}</p><ul>{item.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul></div></article>)}</div></section>
       <section className="work-section" id="work"><div className="section-heading"><div><p className="eyebrow">Things I’ve built</p><h2>Selected <em>work</em></h2></div><p className="heading-note">Data modeling, analytics, and machine learning in practice.</p></div><div className="project-list">{selectedProjects.map(project => <ProjectCard key={project.number} project={project} />)}</div><a className="button browse-projects" href="/projects/">Browse all projects <ArrowUpRight size={17} /></a></section>
 
       <ProcessSection />
       <section className="education-section"><div className="section-heading"><div><p className="eyebrow">School</p><h2><em>Education</em></h2></div><p className="heading-note">The questions I ask in practice are grounded in statistics, computing, and curiosity.</p></div><PhotoSlot id="campus" caption="Life at SFU" className="section-photo" /><div className="education-list">{education.map(item => <article className="education-item timeline-row" key={item.school}><div className="education-meta timeline-meta"><span>{item.dates}</span></div><div className="timeline-content"><h3>{item.school}</h3><p className="experience-role">{item.program}</p><p>{item.detail}</p></div></article>)}</div></section>
-      <section className="leadership-section"><div className="section-heading"><div><p className="eyebrow">Community and leadership</p><h2>Community &<br /><em>leadership.</em></h2></div><p className="heading-note">Student communities I help organize and contribute to.</p></div><PhotoSlot id="community" caption="The people I build with" className="section-photo" /><div className="leadership-list">{leadership.map(item => <article className="leadership-item timeline-row" key={item.organization}><div className="leadership-meta timeline-meta"><span>{item.dates}</span></div><div className="timeline-content"><h3>{item.organization}</h3><p className="experience-role">{item.role}</p><ul>{item.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul></div></article>)}</div></section>
+      <section className="leadership-section"><div className="section-heading"><div><p className="eyebrow">Community and leadership</p><h2>Community &<br /><em>leadership.</em></h2></div><p className="heading-note">Student communities I help organize and contribute to.</p></div><PhotoSlot id="community" caption="An outing with SFU Blueprint" className="section-photo" /><div className="leadership-list">{leadership.map(item => <article className="leadership-item timeline-row" key={item.organization}><div className="leadership-meta timeline-meta"><span>{item.dates}</span></div><div className="timeline-content"><h3>{item.organization}</h3><p className="experience-role">{item.role}</p><ul>{item.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul></div></article>)}</div></section>
       <section className="interests-section"><div className="section-heading"><div><p className="eyebrow">Beyond the dataset</p><h2>The details I<br /><em>notice.</em></h2></div><p className="heading-note">A few things I enjoy outside of work.</p></div><InterestsCarousel /></section>
       <section className="skills-section"><div className="skills-heading"><div><p className="eyebrow">Technical toolkit</p><h2>Tools I <em>use</em></h2></div><p className="heading-note">A practical stack for asking better questions, building reliable pipelines, and turning analysis into something usable.</p></div><div className="skills-cloud">{skills.map(skill => <span key={skill}>{skill}</span>)}</div></section>
       <section className="contact-section" id="contact">
