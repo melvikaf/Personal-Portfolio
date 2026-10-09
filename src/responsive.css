@@ -140,3 +140,6 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 .section-photo .photo-window img{width:100%;height:auto;max-height:none;object-fit:contain}
 .section-photo:has(img) figcaption{padding:14px 4px 8px}
 .photo-interest-02 img{object-position:50% 40%}
+/* Landing portrait orientation: landscape for tablet/desktop, portrait for mobile. */
+@media(min-width:801px){.main-portrait .photo-window{aspect-ratio:16/10}}
+@media(max-width:800px){.main-portrait .photo-window{aspect-ratio:4/5}}
