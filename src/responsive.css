@@ -267,6 +267,7 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
   .studio-divider span:first-child{grid-column:auto;text-align:left;white-space:nowrap}
   .studio-divider .divider-yarn{grid-column:auto;justify-self:center;flex-basis:32px}
   .studio-divider span:last-child{display:block;grid-column:auto;justify-self:end;text-align:right;font-size:inherit;white-space:nowrap}
+  .work-section{padding-top:clamp(44px,10vw,60px)}
   .experience-section{padding-top:clamp(44px,10vw,60px)}
   .experience-section .section-heading{margin-bottom:28px}
   .experience-section .heading-note{max-width:34ch}
