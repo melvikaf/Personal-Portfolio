@@ -27,14 +27,15 @@ footer{height:auto;min-height:100px;gap:20px;flex-wrap:wrap;padding-block:24px}
 
 .studio-divider .divider-yarn{animation:none!important;transform:none;color:var(--accent)}.divider-yarn svg{width:38px;height:32px}
 
-/* Compact image slots expand smoothly for mouse and keyboard users. */
-.project-preview{height:100px;overflow:hidden;margin-bottom:24px;border-radius:12px;transition:height .4s cubic-bezier(.22,1,.36,1)}
+/* Keep project previews compact; let each image's own palette carry the frame. */
+.project-preview{height:100px;aspect-ratio:auto;overflow:hidden;margin-bottom:24px;border-radius:12px;transition:transform .35s cubic-bezier(.22,1,.36,1);background:var(--surface)}
 .project-preview .project-image,.project-preview .project-photo-placeholder{display:flex;width:100%;max-width:none;height:100%;aspect-ratio:auto;margin:0;border-radius:12px;transform:none;filter:none}
 .project-preview .project-image{display:block;object-fit:contain;background:var(--surface)}
+.project-preview-01,.project-preview-01 .project-image{background:#121923}
 .project-preview .project-photo-placeholder{min-height:0;flex-direction:column;gap:8px;padding:16px}
 .project-preview:focus-visible{outline:2px solid var(--accent-ink);outline-offset:4px}
-@media(hover:hover) and (pointer:fine){.project-preview:hover,.project-preview:focus,.project-preview:focus-within{height:clamp(180px,25vw,360px)}}
-@media(hover:none),(pointer:coarse){.project-preview{height:auto;aspect-ratio:16/9}}
+@media(hover:hover) and (pointer:fine){.project-preview:hover,.project-preview:focus,.project-preview:focus-within{height:clamp(180px,20vw,280px);transform:scale(1.01)}}
+@media(hover:none),(pointer:coarse){.project-preview{height:80px;aspect-ratio:auto}}
 @media(prefers-reduced-motion:reduce){.project-preview{transition:none}}
 
 .browse-projects{margin-top:32px;border:1px solid var(--line);color:var(--text)}.browse-projects:hover{border-color:var(--accent);background:var(--surface)}.projects-back{display:inline-block;margin-bottom:40px}.projects-heading{margin-bottom:12px}.projects-heading h1{font:600 clamp(2.5rem,6vw,4.5rem)/1.1 var(--body-font);letter-spacing:-.04em;margin:0}.all-projects-section .archive-content{padding-top:12px}
