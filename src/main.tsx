@@ -28,7 +28,8 @@ const projects: Project[] = [
 ]
 
 const experience: Experience[] = [
-  { company: 'Waterworth', role: 'Junior Data Analyst Co-op', dates: 'May 2026 - Sep. 2026', location: 'Victoria, BC', bullets: ['Delivered trusted ARR, NRR, and GRR reporting through reusable PostgreSQL, Python, Power Query, and Excel workflows.', 'Built a Python Dash simulator for scenario-based capacity and staffing analysis.', 'Connected HubSpot, PostgreSQL, Python, and Excel data into repeatable analytical workflows.'] },
+  { company: 'Waterworth', role: 'Junior Data Analyst', dates: 'Sep. 2026 - Oct. 2026', location: 'Victoria, BC', bullets: ['Continued supporting trusted ARR, NRR, and GRR reporting after my co-op term ended.', 'Connected HubSpot, PostgreSQL, Python, Power Query, and Excel data into repeatable analytical workflows.'] },
+  { company: 'Waterworth', role: 'Data Analyst Co-op', dates: 'May 2026 - Sep. 2026', location: 'Victoria, BC', bullets: ['Delivered trusted ARR, NRR, and GRR reporting through reusable PostgreSQL, Python, Power Query, and Excel workflows.', 'Built a Python Dash simulator for scenario-based capacity and staffing analysis.', 'Connected HubSpot, PostgreSQL, Python, and Excel data into repeatable analytical workflows.'] },
   { company: 'Vancouver Coastal Health', role: 'Data Analytics / Data Science Intern', dates: 'Jan. 2026 - Apr. 2026', location: 'Vancouver, BC', bullets: ['Improved usability of healthcare datasets spanning more than 3M records through Python and Azure Databricks workflows.', 'Automated QA workflows for Checkbox and REDCap, validating field mappings, branching logic, and production data flows.', 'Translated healthcare requirements into reproducible validation rules and documented workflows.'] },
   { company: 'Nettwerk Music Group', role: 'Data Insights Analyst Co-op Student', dates: 'Sep. 2025 - Jan. 2026', location: 'Vancouver, BC', bullets: ['Simplified analysis across more than 190M records with Snowflake SQL for downstream Tableau reporting.', 'Unified four Tableau dashboards into a consolidated analytical view across artist, audience, and engagement reporting.', 'Developed reusable Tableau views and standardized outputs across more than 200 artists.'] },
 ]
@@ -109,7 +110,7 @@ function PhotoSlot({ id, caption, className = '' }: { id: string; caption: strin
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleExpanded() }
   }
   return <figure className={`photo-slot ${className} ${expanded ? 'is-expanded' : ''}`} onClick={toggleExpanded} onKeyDown={handleKeyDown} tabIndex={0} role="button" aria-pressed={expanded} aria-label={`${expanded ? 'Close' : 'Examine'} photo: ${caption}`}>
-    <div className={`photo-window photo-${id}`}>{src && !failed ? <img src={src} alt={caption} loading={id === 'portrait' ? 'eager' : 'lazy'} onError={() => setFailed(true)} /> : <div className="photo-empty" role="img" aria-label={`Photo placeholder: ${caption}`}><Camera size={28} strokeWidth={1} /><span>Your photo here</span></div>}</div>
+    <div className={`photo-window photo-${id}`}>{src && !failed ? <img src={src} alt={caption} loading={id === 'portrait' ? 'eager' : 'lazy'} decoding="async" onError={() => setFailed(true)} /> : <div className="photo-empty" role="img" aria-label={`Photo placeholder: ${caption}`}><Camera size={28} strokeWidth={1} /><span>Your photo here</span></div>}</div>
     <figcaption>{caption}</figcaption>
   </figure>
 }
@@ -129,6 +130,14 @@ function InterestsCarousel() {
   const move = (direction: number) => setIndex(current => (current + direction + interests.length) % interests.length)
   const interest = interests[index]
   const captions = ['Pride and Prejudice', 'Crème brûlée discoveries', 'Stormhacks 2026', 'Paris. 2019.', 'Hazzlet. 2025.']
+  useEffect(() => {
+    const adjacent = [-1, 1].map(offset => (index + offset + interests.length) % interests.length)
+    adjacent.forEach(itemIndex => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = personalPhotos[`interest-${interests[itemIndex].label}`]
+    })
+  }, [index])
   return <div className="interests-carousel" role="region" aria-roledescription="carousel" aria-label="Outside of work" onKeyDown={event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1) }
   }}>
