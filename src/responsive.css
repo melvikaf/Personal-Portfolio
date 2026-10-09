@@ -115,13 +115,13 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 .hero.section-grid{min-height:0;padding-top:clamp(20px,4svh,44px);padding-bottom:clamp(24px,4svh,44px);align-items:center}
 .hero .hero-name{font-size:clamp(3rem,min(7vw,11svh),6rem);margin-bottom:20px}
 .hero-greeting{margin-bottom:12px}.hero-intro{margin-bottom:12px;line-height:1.65}.hero-focus{margin-top:12px;margin-bottom:0}.hero-availability{margin-top:6px}.hero-actions{margin-top:22px}
-.hero-portrait{max-width:390px;justify-self:center}
-.main-portrait{max-width:min(350px,40svh)}
+.hero-portrait{max-width:390px;justify-self:end;padding-inline:0}
+.main-portrait{max-width:min(350px,40svh);margin-left:auto;margin-right:0}
 .cat-companion{width:min(210px,25svh);margin-top:-48px;right:0}
 .cat-companion span{line-height:1.5}
 }
 @media(min-width:801px) and (min-height:750px){
-.hero.section-grid{padding-top:clamp(36px,5svh,60px);padding-bottom:clamp(40px,5svh,60px)}
+.hero.section-grid{padding-top:clamp(48px,7svh,84px);padding-bottom:clamp(56px,8svh,96px)}
 .hero-greeting{margin-bottom:18px}
 .hero .hero-name{margin-bottom:28px}
 .hero-actions{margin-top:28px}
