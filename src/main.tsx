@@ -60,15 +60,15 @@ const projectTech = Array.from(new Set(projects.flatMap(project => project.tags)
 const interests = [
   { label: '01', title: 'Stories with a little tension', text: 'Historical romance films and books - especially Pride & Prejudice (2005), for the atmosphere, restraint, and the slow reveal of what people really mean.' },
   { label: '02', title: 'Cooking, eating, repeating', text: 'I love food in both directions: making something from whatever is in the kitchen, then happily planning my next meal while I eat the first one.' },
-  { label: '03', title: 'Scent and small discoveries', text: 'I love perfumes, trying new things, and noticing the tiny details that make an experience feel personal - a note, a texture, a combination, a surprise.' },
+  { label: '03', title: 'Always learning', text: 'I love learning new things, especially when I can try them with other people. Hackathons are one of my favourite ways to turn curiosity into something tangible.' },
   { label: '04', title: 'Always somewhere new', text: 'I have travelled to more than 10 countries, and I love how a new place changes what you notice - the food, the pace, the small systems that make daily life work.' },
   { label: '05', title: 'Always listening', text: 'Music is one of the ways I pay attention to the world. I love discovering new artists, following how a song changes a mood, and noticing the stories people build around sound.' },
 ]
 
 // Add paths such as '/photos/campus.jpg' here when your photos are ready.
 const personalPhotos: Record<string, string> = {
-  portrait: '', work: '/Nettwerk_Christmas_Dinner.jpg', campus: '', community: '/Blueprint_Outing.jpg',
-  'interest-01': '', 'interest-02': '/Creme_Brulee.jpg', 'interest-03': '', 'interest-04': '', 'interest-05': '',
+  portrait: '/Me.JPG', work: '/Nettwerk_Christmas_Dinner.jpg', campus: '', community: '/Blueprint_Outing.jpg',
+  'interest-01': '/PrideAndPrejudice.webp', 'interest-02': '/Creme_Brulee.jpg', 'interest-03': '/Hackathon.jpg', 'interest-04': '/Paris.JPG', 'interest-05': '/Concert.JPG',
 }
 
 function CatMark({ className = '' }: { className?: string }) {
@@ -123,7 +123,7 @@ function InterestsCarousel() {
   const touchStart = useRef<number | null>(null)
   const move = (direction: number) => setIndex(current => (current + direction + interests.length) % interests.length)
   const interest = interests[index]
-  const captions = ['Books & film nights', 'Crème brûlée discoveries', 'Little discoveries', 'Somewhere new', 'On repeat']
+  const captions = ['Books & film nights', 'Crème brûlée discoveries', 'Always learning', 'Somewhere new', 'On repeat']
   return <div className="interests-carousel" role="region" aria-roledescription="carousel" aria-label="Outside of work" onKeyDown={event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1) }
   }}>
@@ -191,7 +191,7 @@ function App() {
           <div className="hero-actions"><a className="button button-primary" href="/#experience">See my experience <ArrowUpRight size={17} /></a><a className="button button-secondary" href="/#work">Explore projects <ArrowUpRight size={17} /></a></div>
         </div>
         <div className="hero-visual hero-portrait">
-          <PhotoSlot id="portrait" caption="Hi, that’s me (photo coming soon)." className="main-portrait" />
+          <PhotoSlot id="portrait" caption="Hi, that’s me!" className="main-portrait" />
           <CatCompanion sleeping={theme === 'dark'} onToggle={toggleTheme} />
         </div>
       </section>
