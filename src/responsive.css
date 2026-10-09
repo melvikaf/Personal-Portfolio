@@ -143,4 +143,4 @@ footer.cat-footer{display:block;padding-top:24px;padding-bottom:28px;border-top:
 /* Landing portrait orientation: landscape for tablet/desktop, portrait for mobile. */
 @media(min-width:801px){.main-portrait .photo-window{aspect-ratio:16/10}}
 @media(max-width:800px){.main-portrait .photo-window{aspect-ratio:4/5}}
-@media(min-width:801px){.main-portrait{max-width:min(420px,46svh)}}
+@media(min-width:801px){.main-portrait{max-width:min(460px,50svh)}}
